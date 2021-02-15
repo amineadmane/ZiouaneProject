@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Colis;
+use App\Evaluation;
+use App\Http\Controllers\EvaluationController;
 use App\Livreur;
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +21,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('colis', function() {
+Route::get('colis', function () {
     return Colis::all();
 });
- 
-Route::get('livreurs', function() {
-    
+
+Route::get('livreurs', function () {
+
     return Livreur::all();
 });
- 
+
+Route::apiResource('Evaluation', 'EvaluationController');
