@@ -38,6 +38,7 @@ return array(
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\LivreurController' => $baseDir . '/app/Http/Controllers/LivreurController.php',
     'App\\Http\\Controllers\\LogsController' => $baseDir . '/app/Http/Controllers/LogsController.php',
+    'App\\Http\\Controllers\\MetricController' => $baseDir . '/app/Http/Controllers/MetricController.php',
     'App\\Http\\Controllers\\WilayaController' => $baseDir . '/app/Http/Controllers/WilayaController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',

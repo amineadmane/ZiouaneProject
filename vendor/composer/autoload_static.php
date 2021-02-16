@@ -625,6 +625,7 @@ class ComposerStaticInit5d429e05ffac67f57382dcee1d3afe74
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\LivreurController' => __DIR__ . '/../..' . '/app/Http/Controllers/LivreurController.php',
         'App\\Http\\Controllers\\LogsController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogsController.php',
+        'App\\Http\\Controllers\\MetricController' => __DIR__ . '/../..' . '/app/Http/Controllers/MetricController.php',
         'App\\Http\\Controllers\\WilayaController' => __DIR__ . '/../..' . '/app/Http/Controllers/WilayaController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
