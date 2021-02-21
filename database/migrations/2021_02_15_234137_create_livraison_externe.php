@@ -25,7 +25,7 @@ class CreateLivraisonExterne extends Migration
             $table->string('codePostal');
             $table->string('adresse');
             $table->integer('prix');
-            $table->float('ditance_parcourous');
+            $table->float('distance_parcourus');
             
             $table->foreign('id_client')->references('id_client')
             ->on('clients')->onDelete('cascade');
@@ -35,6 +35,12 @@ class CreateLivraisonExterne extends Migration
 
             $table->foreign('id_livreur')->references('id_liv_ext')
             ->on('livreur_exts')->onDelete('cascade');
+
+            $table->foreign('wilaya')->references('id')
+            ->on('wilayas')->onDelete('cascade');
+
+            $table->foreign('commune')->references('id')
+            ->on('communes')->onDelete('cascade');
             
             $table->timestamps();
         });
