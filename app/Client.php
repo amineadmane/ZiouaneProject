@@ -28,5 +28,15 @@ class Client extends Authenticatable
     public function FraisL(){
         return $this->hasMany('App\FraisLivraison','from','wilaya');
     }
+
+    public function Livraison_externe()
+    {
+        return $this->belongsTo(Livraison_externe::class);
+    }
+
+    public function LivreurExts()
+    {
+        return $this->belongsToMany(LivreurExt::class,'evaluation','id_client', 'id_liv_ext')->withPivot('note','commentaire')->withTimestamps();;
+    }
     
 }

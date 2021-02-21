@@ -14,7 +14,6 @@ class CreateEvaluationsTable extends Migration
     public function up()
     {
         Schema::create('evaluations', function (Blueprint $table) {
-            $table->id('id_evaluation');
             $table->unsignedInteger('id_client');
             $table->unsignedInteger('id_liv_ext');
             $table->float('note');

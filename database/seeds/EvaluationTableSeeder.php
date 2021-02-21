@@ -1,6 +1,7 @@
 <?php
 
 use App\Evaluation;
+use App\LivreurExt;
 use Illuminate\Database\Seeder;
 
 class EvaluationTableSeeder extends Seeder
