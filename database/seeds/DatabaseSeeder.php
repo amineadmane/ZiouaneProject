@@ -14,5 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LivreurExtTableSeeder::class);
         $this->call(EvaluationTableSeeder::class);
         $this->call(MetricTableSeedered::class);
+        $this->call(Colis_externeTableSeeder::class);
+        $this->call(Livraison_externeTableSeeder::class);
     }
 }

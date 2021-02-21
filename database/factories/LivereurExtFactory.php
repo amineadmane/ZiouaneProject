@@ -8,18 +8,18 @@ use Faker\Generator as Faker;
 $factory->define(LivreurExt::class, function (Faker $faker) {
     return [
         'Nom' => $faker->name,
-        'E-mail' => $faker->unique()->safeEmail,
-        'Prenom' => $faker->name,
-        'Phone_number' => $faker->phoneNumber,
+        'e_mail' => $faker->unique()->safeEmail,
+        'prenom' => $faker->name,
+        'phone_number' => $faker->phoneNumber,
         'id_permis' => $faker->unique()->randomNumber(),
-        'Expire_date' => $faker->date,
-        'Etat' => "bloque",
-        'Matricule_vehicule' => $faker->buildingNumber,
-        'Modele_Vehicule' => $faker->word(),
-        'Couleur_vehicule' => $faker->colorName(),
-        'Note' => 2.6,
-        'Points' => 105,
-        'Code_parrainage' => $faker->ean8(),
+        'expire_date' => $faker->date,
+        'etat' => "bloque",
+        'matricule_vehicule' => $faker->buildingNumber,
+        'modele_Vehicule' => $faker->word(),
+        'couleur_vehicule' => $faker->colorName(),
+        'note' => 2.6,
+        'points' => 105,
+        'code_parrainage' => $faker->ean8(),
         'password' => $faker->md5
     ];
 });

@@ -17,11 +17,11 @@ class CreateEvaluationsTable extends Migration
             $table->id('id_evaluation');
             $table->unsignedInteger('id_client');
             $table->unsignedInteger('id_liv_ext');
-            $table->float('Note');
-            $table->text('Commentaire');
+            $table->float('note');
+            $table->text('commentaire');
             $table->timestamps();
-            $table->foreign('id_client')->references('id_client')->on('clients');
-            $table->foreign('id_liv_ext')->references('id_liv_ext')->on('livreur_exts');
+            $table->foreign('id_client')->references('id_client')->on('clients')->onDelete('cascade');
+            $table->foreign('id_liv_ext')->references('id_liv_ext')->on('livreur_exts')->onDelete('cascade');
         });
     }
 

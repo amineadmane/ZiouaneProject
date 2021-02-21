@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateColisExterne extends Migration
+class CreateColisExternesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateColisExterne extends Migration
      */
     public function up()
     {
-        Schema::create('colis_externe', function (Blueprint $table) {
-            $table->bigIncrements('id_colis_externe');
+        Schema::create('colis_externes', function (Blueprint $table) {
+            $table->id('id_colis_externe');
             $table->string('ref');
             $table->float('valeur');
             $table->float('poids');
-            $table->boolean('etat');
-
+            $table->string('etat');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateColisExterne extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colis_externe');
+        Schema::dropIfExists('colis_externes');
     }
 }
