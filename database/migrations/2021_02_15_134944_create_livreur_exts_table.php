@@ -15,20 +15,20 @@ class CreateLivreurExtsTable extends Migration
     {
         Schema::create('livreur_exts', function (Blueprint $table) {
             $table->bigIncrements('id_liv_ext');
-            $table->string('nom', 255);
-            $table->string('e_mail')->unique();
-            $table->string('prenom', 255);
-            $table->string('phone_number')->unique();
-            $table->string('id_permis');
-            $table->date('expire_date');
-            $table->string('etat');
-            $table->string('matricule_vehicule');
-            $table->string('modele_vehicule');
-            $table->string('couleur_vehicule');
-            $table->float('note');
-            $table->smallInteger('points');
-            $table->string('code_parrainage');
-            $table->string('password');
+            $table->string('nom', 255)->nullable();
+            $table->string('e_mail')->unique()->nullable();
+            $table->string('prenom', 255)->nullable();
+            $table->string('phone_number')->unique()->nullable();
+            $table->string('id_permis')->nullable();
+            $table->date('expire_date')->nullable();
+            $table->string('etat')->default('Bloqué');
+            $table->string('matricule_vehicule')->nullable();
+            $table->string('modele_vehicule')->nullable();
+            $table->string('couleur_vehicule')->nullable();
+            $table->float('note')->nullable();
+            $table->smallInteger('points')->nullable();
+            $table->string('code_parrainage')->nullable();
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

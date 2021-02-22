@@ -5,6 +5,7 @@ namespace Inertia;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Response as BaseResponse;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -46,7 +47,11 @@ class ResponseFactory
 
     public function getVersion()
     {
-        return $this->version instanceof Closure ? App::call($this->version) : $this->version;
+        $version = $this->version instanceof Closure
+            ? App::call($this->version)
+            : $this->version;
+
+        return (string) $version;
     }
 
     public function render($component, $props = [])
@@ -61,5 +66,10 @@ class ResponseFactory
             $this->rootView,
             $this->getVersion()
         );
+    }
+
+    public function location($url)
+    {
+        return BaseResponse::make('', 409, ['X-Inertia-Location' => $url]);
     }
 }

@@ -12,6 +12,6 @@ class Colis_externeTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Colis_externe::class, 30)->create();
+        Colis_externe::factory()->count(30)->create();
     }
 }

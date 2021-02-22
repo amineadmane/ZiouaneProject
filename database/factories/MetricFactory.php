@@ -1,23 +1,39 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Metric;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Metric::class, function (Faker $faker) {
-    return [
-        'id_liv_ext' => $faker->randomDigit,
-        'CA_totale' => $faker->randomDigit,
-        'benifice_totale' => $faker->randomDigit,
-        'CA_today' => $faker->randomDigit,
-        'benifice_today' => $faker->randomDigit,
-        'CA_mensuel' => $faker->randomDigit,
-        'benifice_mensuel' => $faker->randomDigit,
-        'benifice_mois_1' => $faker->randomDigit,
-        'benifice_mois_2' => $faker->randomDigit,
-        'benifice_mois_3' => $faker->randomDigit,
-        'benifice_mois_4' => $faker->randomDigit,
-        'benifice_mois_5' => $faker->randomDigit,
-    ];
-});
+class MetricFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Metric::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'id_liv_ext' => $this->faker->randomDigit,
+            'CA_totale' => $this->faker->randomDigit,
+            'benifice_totale' => $this->faker->randomDigit,
+            'CA_today' => $this->faker->randomDigit,
+            'benifice_today' => $this->faker->randomDigit,
+            'CA_mensuel' => $this->faker->randomDigit,
+            'benifice_mensuel' => $this->faker->randomDigit,
+            'benifice_mois_1' => $this->faker->randomDigit,
+            'benifice_mois_2' => $this->faker->randomDigit,
+            'benifice_mois_3' => $this->faker->randomDigit,
+            'benifice_mois_4' => $this->faker->randomDigit,
+            'benifice_mois_5' => $this->faker->randomDigit,
+        ];
+    }
+}

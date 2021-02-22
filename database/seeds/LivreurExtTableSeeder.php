@@ -12,6 +12,6 @@ class LivreurExtTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(LivreurExt::class, 30)->create();
+        LivreurExt::factory()->count(30)->create();
     }
 }

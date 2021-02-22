@@ -1,15 +1,31 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Colis_externe;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Colis_externe::class, function (Faker $faker) {
-    return [
-        'ref' => $faker->ean8,
-        'valeur' => $faker->randomNumber(5),
-        'poids' => $faker->randomNumber(2),
-        'etat' => $faker->randomElement(["annule", "livre"])
-    ];
-});
+class Colis_externeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Colis_externe::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'ref' => $this->faker->ean8,
+            'valeur' => $this->faker->randomNumber(5),
+            'poids' => $this->faker->randomNumber(2),
+            'etat' => $this->faker->randomElement(["annule", "livre"])
+        ];
+    }
+}

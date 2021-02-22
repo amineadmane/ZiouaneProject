@@ -16,8 +16,8 @@ class CreateEvaluationsTable extends Migration
         Schema::create('evaluations', function (Blueprint $table) {
             $table->unsignedInteger('id_client');
             $table->unsignedInteger('id_liv_ext');
-            $table->float('note');
-            $table->text('commentaire');
+            $table->float('note')->nullable();
+            $table->text('commentaire')->nullable();
             $table->timestamps();
             $table->foreign('id_client')->references('id_client')->on('clients')->onDelete('cascade');
             $table->foreign('id_liv_ext')->references('id_liv_ext')->on('livreur_exts')->onDelete('cascade');

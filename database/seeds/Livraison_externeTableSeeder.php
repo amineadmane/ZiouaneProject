@@ -12,6 +12,6 @@ class Livraison_externeTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Livraison_externe::class, 30)->create();
+        Livraison_externe::factory()->count(30)->create();
     }
 }

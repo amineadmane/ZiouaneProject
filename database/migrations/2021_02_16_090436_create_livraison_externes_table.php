@@ -15,18 +15,19 @@ class CreateLivraisonExternesTable extends Migration
     {
         Schema::create('livraison_externes', function (Blueprint $table) {
             $table->id('id_livraison_externe');
-            $table->unsignedbigInteger('id_client');
-            $table->unsignedbigInteger('id_colis');
+            $table->unsignedbigInteger('id_client')->nullable();
+            $table->unsignedbigInteger('id_colis')->nullable();
             $table->unsignedbigInteger('id_livreur')->nullable();
-            $table->string('nomclient');
-            $table->string('telephone');
-            $table->unsignedbigInteger('wilaya');
-            $table->unsignedbigInteger('commune');
-            $table->string('codePostal');
-            $table->string('adresse');
-            $table->integer('prix');
-            $table->float('ditance_parcourous');
-
+            $table->string('nomclient')->nullable();
+            $table->string('telephone')->nullable();
+            $table->unsignedbigInteger('wilaya')->nullable();
+            $table->unsignedbigInteger('commune')->nullable();
+            $table->string('codePostal')->nullable();
+            $table->string('adresse')->nullable();
+            $table->integer('prix')->nullable();
+            $table->float('ditance_parcourous')->nullable();
+            $table->float('note')->nullable();
+            $table->mediumText('commentaire')->nullable();
             $table->foreign('id_client')->references('id_client')
                 ->on('clients')->onDelete('cascade');
 
