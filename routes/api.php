@@ -31,3 +31,31 @@ Route::get('livreurs', function () {
 });
 
 Route::apiResource('Evaluation', 'EvaluationController');
+
+Route::apiResource('Metric', 'MetricController');
+
+Route::apiResource('livraison', 'Livraison_externeController');
+
+Route::apiResource('livreur', 'LivreurExtController');
+
+Route::get('livraison/{livreur}/{client}/{colis}',[
+    'uses'=>'Livraison_externeController@showlivraison'
+]);
+
+Route::get('livraisonaujourdui/{livreur}',[
+    'uses'=>'Livraison_externeController@showlivraisonsaujourdhui'
+]);
+
+Route::get('dernierelivraison/{livreur}',[
+    'uses'=>'Livraison_externeController@showderniereliv'
+]);
+
+Route::get('historiqueannuel/{livreur}/{year}',[
+    'uses'=>'Livraison_externeController@showhistoriqueannuel'
+]);
+Route::get('historiquemensuel/{livreur}/{month}',[
+    'uses'=>'Livraison_externeController@showlivraisonsmensuels'
+]);
+Route::get('parrainage/{livreur}',[
+    'uses'=>'LivreurExtController@shownotenpoints'
+]);
