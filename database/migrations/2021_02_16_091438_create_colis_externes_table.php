@@ -15,10 +15,10 @@ class CreateColisExternesTable extends Migration
     {
         Schema::create('colis_externes', function (Blueprint $table) {
             $table->id('id_colis_externe');
-            $table->string('ref');
-            $table->float('valeur');
-            $table->float('poids');
-            $table->string('etat');
+            $table->string('ref')->nullable();
+            $table->float('valeur')->nullable();
+            $table->float('poids')->nullable();
+            $table->string('etat')->nullable();
             $table->timestamps();
         });
     }
