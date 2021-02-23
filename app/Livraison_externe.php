@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Livraison_externe extends Model
 {
-    use HasFactory;
     public $timestamps = true;
 
     protected $fillable = ['id_client', 'id_colis', 'id_livreur', 'nomclient', 'telephone', 'wilaya', 'commune', 'codePostal', 'adresse', 'prix', 'ditance_parcourus', 'created_at'];
