@@ -34,29 +34,35 @@ Route::get('colis', function () {
     return Colis::all();
 });
 
-Route::get('livreurs', function () {
+Route::apiResource('Evaluation', 'EvaluationController');
 
-    return Livreur::all();
-});
+Route::apiResource('Metric', 'MetricController');
 
+Route::apiResource('livraison', 'Livraison_externeController');
 
-Route::post('/LivreurExt', function (Request $request) {
-    $request->validate([
-        'e_mail' => 'required|e_mail',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
+Route::apiResource('livreur', 'LivreurExtController');
 
-    $user = LivreurExt::where('e_mail', $request->e_mail)->first();
+Route::get('livraison/{livreur}/{client}/{colis}',[
+    'uses'=>'Livraison_externeController@showlivraison'
+]);
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
+Route::get('livraisonaujourdui/{livreur}',[
+    'uses'=>'Livraison_externeController@showlivraisonsaujourdhui'
+]);
 
-    return $user->createToken($request->device_name)->plainTextToken;
-});
+Route::get('dernierelivraison/{livreur}',[
+    'uses'=>'Livraison_externeController@showderniereliv'
+]);
+
+Route::get('historiqueannuel/{livreur}/{year}',[
+    'uses'=>'Livraison_externeController@showhistoriqueannuel'
+]);
+Route::get('historiquemensuel/{livreur}/{month}',[
+    'uses'=>'Livraison_externeController@showlivraisonsmensuels'
+]);
+Route::get('parrainage/{livreur}',[
+    'uses'=>'LivreurExtController@shownotenpoints'
+]);
 
 Route::middleware('auth:sanctum')->get('/LivreurExt/revoke', function (Request $request) {
     $user = $request->user();

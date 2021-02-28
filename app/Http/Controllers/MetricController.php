@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Metric;
 use Illuminate\Http\Request;
+Use \Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MetricController extends Controller
 {
@@ -25,7 +27,20 @@ class MetricController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $metric = Metric::create(array(
+            'id_liv_ext' => 2,
+            'CA_totale' => $request['CA_totale'],
+            'benifice_totale' => $request['benifice_totale'],
+            'CA_today' => $request['CA_today'],
+            'benifice_today' => $request['benifice_today'],
+            'CA_mensuel' => $request['CA_mensuel'],
+            'benifice_mensuel' => $request['benifice_mensuel'],
+            'benifice_mois_1' => $request['benifice_mois_1'],
+            'benifice_mois_2' => $request['benifice_mois_2'],
+            'benifice_mois_3' => $request['benifice_mois_3'],
+            'benifice_mois_4' => $request['benifice_mois_4'],
+            'benifice_mois_5' => $request['benifice_mois_5'],
+        ));
     }
 
     /**
@@ -34,10 +49,11 @@ class MetricController extends Controller
      * @param  \App\Metric  $metric
      * @return \Illuminate\Http\Response
      */
-    public function show(Metric $metric)
+    public function show(int $id_liv_ext)
     {
-        //
+        return Metric::where('id_liv_ext', '=', $id_liv_ext)->first();
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -46,9 +62,22 @@ class MetricController extends Controller
      * @param  \App\Metric  $metric
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Metric $metric)
+    public function update(Request $request,int $id_liv_ext)
     {
-        //
+        $metric = Metric::where('id_liv_ext', '=', $id_liv_ext)->first();
+        $metric->update([
+            'CA_totale' => $request['Ca_totale'],
+            'benifice_totale' => $request['benefice_totale'],
+            'CA_today' => $request['CA_today'],
+            'benefice_today' => $request['benefice_today'],
+            'CA_mensuel' => $request['CA_mensuel'],
+            'benifice_mensuel' => $request['benefice_mensuel'],
+            'benifice_mois_1' => $request['benefice_mois_1'],
+            'benifice_mois_2' => $request['benefice_mois_2'],
+            'benifice_mois_3' => $request['benefice_mois_3'],
+            'benifice_mois_4' => $request['benefice_mois_4'],
+            'benifice_mois_5' => $request['benefice_mois_5'],
+        ]);
     }
 
     /**
