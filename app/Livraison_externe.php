@@ -9,8 +9,9 @@ class Livraison_externe extends Model
 {
     use HasFactory;
     public $timestamps = true;
+    protected $primaryKey="id_livraison_externe";
 
-    protected $fillable = ['id_client', 'id_colis', 'id_livreur', 'nomclient', 'telephone', 'wilaya', 'commune', 'codePostal', 'adresse', 'prix', 'ditance_parcourus', 'created_at'];
+    protected $fillable = ['id_client', 'id_colis', 'id_livreur', 'nomclient', 'telephone', 'wilaya', 'commune', 'codePostal', 'adresse', 'prix', 'ditance_parcourous','note','commentaire', 'created_at'];
     public function Wilaya()
     {
         return $this->hasOne(Wilaya::class);

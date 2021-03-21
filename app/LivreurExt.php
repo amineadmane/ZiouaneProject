@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class LivreurExt extends Authenticatable
 {
-    use Notifiable, HasApiTokens, HasFactory;
+    use Notifiable, HasApiTokens , HasFactory;
     protected $guard = 'livreur_ext';
     protected $primaryKey = 'id_liv_ext';
     protected $fillable = [

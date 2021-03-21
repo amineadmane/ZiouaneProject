@@ -34,7 +34,33 @@ Route::get('colis', function () {
     return Colis::all();
 });
 
-Route::apiResource('Evaluation', 'EvaluationController');
+
+Route::middleware('auth:sanctum')->get('/LivreurExt/revoke', function (Request $request) {
+    $user = $request->user();
+    $user->tokens()->delete();
+    return "token deleted";
+});
+
+Route::post('/LivreurExt', function (Request $request) {
+    $request->validate([
+        'e_mail' => 'required|e_mail',
+        'password' => 'required',
+        'device_name' => 'required',
+    ]);
+
+    $user = LivreurExt::where('e_mail', $request->e_mail)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+
+    return $user->createToken($request->device_name)->plainTextToken;
+});
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('Evaluation', 'EvaluationController');
 
 Route::apiResource('Metric', 'MetricController');
 
@@ -50,6 +76,16 @@ Route::get('livraisonaujourdui/{livreur}',[
     'uses'=>'Livraison_externeController@showlivraisonsaujourdhui'
 ]);
 
+Route::get('livraisonyears/{livreur}',[
+    'uses'=>'Livraison_externeController@showyears'
+]);
+
+Route::get('histolivraisonmensuelle/{livreur}/{mois}/{year}',[
+    'uses'=>'Livraison_externeController@histolivraisonmensuelle'
+]);
+
+
+
 Route::get('dernierelivraison/{livreur}',[
     'uses'=>'Livraison_externeController@showderniereliv'
 ]);
@@ -61,11 +97,26 @@ Route::get('historiquemensuel/{livreur}/{month}',[
     'uses'=>'Livraison_externeController@showlivraisonsmensuels'
 ]);
 Route::get('parrainage/{livreur}',[
-    'uses'=>'LivreurExtController@shownotenpoints'
+    'uses'=>'LivreurExtController@showcodenpoints'
+]);
+Route::get('Evaluationtotal/{livreur}',[
+    'uses'=>'LivreurExtController@Evaluationtotale'
+]);
+Route::get('histoevaluation/{livreur}',[
+    'uses'=>'Livraison_externeController@histoevaluation'
 ]);
 
-Route::middleware('auth:sanctum')->get('/LivreurExt/revoke', function (Request $request) {
-    $user = $request->user();
-    $user->tokens()->delete();
-    return "token deleted";
+Route::post('switchstatus/{livreur}',[
+    'uses'=>'LivreurExtController@switchstatus'
+]);
+
+Route::post('send',[
+    'uses'=>'PushNotificationController@bulksend'
+]);
+Route::get('Annulerlivraison/{livreur}',[
+    'uses'=>'Livraison_externeController@Annuler'
+]);
+
+
+
 });

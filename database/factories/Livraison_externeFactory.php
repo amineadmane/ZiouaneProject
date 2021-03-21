@@ -32,7 +32,10 @@ class Livraison_externeFactory extends Factory
             'codePostal' => $this->faker->postcode,
             'adresse' => $this->faker->address,
             'prix' => $this->faker->randomNumber(3),
-            'ditance_parcourous' => $this->faker->randomNumber(2)
+            'ditance_parcourous' => $this->faker->randomNumber(2),
+            'note' => $this->faker->numberBetween(0, 5),
+            'commentaire' => $this->faker->paragraph(6, true),
+
         ];
     }
 }

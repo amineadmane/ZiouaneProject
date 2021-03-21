@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\LivreurExt;
 use Faker\Generator as Faker;
 use App\Http\Controllers\Controller;
+use App\Livreur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LivreurExtController extends Controller
 {
@@ -56,12 +58,16 @@ class LivreurExtController extends Controller
     {
         //
     }
-    public function shownotenpoints($livreur)
+    public function showcodenpoints($livreur)
     {
-        return LivreurExt::select('note', 'points')->
+        return LivreurExt::select('code_parrainage', 'points')->
         where('id_liv_ext','=',$livreur)->first();
     }
 
+    public function Evaluationtotale($livreur)
+    {
+        return  LivreurExt::where('id_liv_ext','=' ,$livreur)->select('note')->get()->first();
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -87,6 +93,25 @@ class LivreurExtController extends Controller
             'points' => 0,
             'code_parrainage' => $request['code_parrainage'],
             'password' => $request['password']
+        ]);
+    }
+    public function switchstatus(Request $request, $id)
+    {
+        $livreur = LivreurExt::where('id_liv_ext', '=', $id)->first();    
+        //return $request->etat;
+        if($request->etat == "true")
+        {
+
+            $etat = "Connecte";
+            printf($etat);
+        }
+        else{
+           
+            $etat = "disconnected";
+            printf("2");
+        }
+        $livreur->update([
+            'etat' => $etat,
         ]);
     }
 
