@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Livraison_externe extends Model
 {
-    use HasFactory;
     public $timestamps = true;
     protected $primaryKey="id_livraison_externe";
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Colis_externe extends Model
 {
-    use HasFactory;
+
     public $timestamps = true;
 
     protected $fillable = ['ref', 'valeur', 'poids', 'etat'];

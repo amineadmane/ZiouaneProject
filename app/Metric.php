@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Metric extends Model
 {
-    use HasFactory;
+
     public $timestamps = true;
 
     protected $fillable = ['id_metric','id_liv_ext','CA_totale','benifice_totale' , 'CA_today' , 'benifice_today' , 
