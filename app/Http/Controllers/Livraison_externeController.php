@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Livraison_externe;
-Use \Carbon\Carbon;
+use \Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -48,15 +48,20 @@ class Livraison_externeController extends Controller
      * @param  \App\Livraison_externe  $livraison_externe
      * @return \Illuminate\Http\Response
      */
-    public function showlivraison($livreur,$client,$colis)
+    public function showlivraison($livreur, $client, $colis)
     {
-        return Livraison_externe::where('id_livreur', '=', $livreur)->where('id_client','=',$client)
-        ->where('id_colis','=',$colis)->first();
+        return Livraison_externe::where('id_livreur', '=', $livreur)->where('id_client', '=', $client)
+            ->where('id_colis', '=', $colis)->first();
     }
 
     public function showlivraisonsaujourdhui($livreur)
     {
-        return Livraison_externe::where('id_livreur', '=', $livreur)->select(DB::raw('count(*) as livraisons ,sum(ditance_parcourous) as distance_totale, sum(prix) as prix'))->whereDate('created_at','=',Carbon::today())->get()->first();
+        return Livraison_externe::where('id_livreur', '=', $livreur)->select(DB::raw(
+            'count(*) as livraisons
+        ,sum(ditance_parcourous) as distance_totale
+        , sum(prix) as prix,
+        AVG (note) as evaluation'
+        ))->whereDate('created_at', '=', Carbon::today())->get()->first();
     }
 
     public function showderniereliv($livreur)
@@ -64,14 +69,13 @@ class Livraison_externeController extends Controller
         return Livraison_externe::where('id_livreur', '=', $livreur)->get()->last();
     }
 
-    public function  showhistoriqueannuel($livreur,$year)
+    public function  showhistoriqueannuel($livreur, $year)
     {
-        $livraisons =  DB::table('livraison_externes')->
-        select(DB::raw('MONTH(created_at) as mois , count(*) as nb_livraisons ,sum(ditance_parcourous) as distance_totale'))->whereYear('created_at', '=', $year)
-        ->groupBy('mois')->get();
+        $livraisons =  DB::table('livraison_externes')->select(DB::raw('MONTH(created_at) as mois , count(*) as nb_livraisons ,sum(ditance_parcourous) as distance_totale'))->whereYear('created_at', '=', $year)
+            ->groupBy('mois')->get();
         return $livraisons;
     }
-    public function showlivraisonsmensuels($livreur,$month)
+    public function showlivraisonsmensuels($livreur, $month)
     {
         return Livraison_externe::where('id_livreur', '=', $livreur)->whereMonth('created_at', '=', $month)->get();
     }
