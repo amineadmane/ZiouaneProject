@@ -50,7 +50,7 @@ class LivreurExtController extends Controller
             'matricule_vehicule' => $request['matricule_vehicule'],
             'modele_vehicule' => $request['modele_vehicule'],
             'couleur_vehicule' => $request['couleur_vehicule'],
-            'note' => 0,
+            'note' => 0.01,
             'points' => 0,
             'code_parrainage' => $request['code_parrainage'],
             'password' => Hash::make($request['password'])

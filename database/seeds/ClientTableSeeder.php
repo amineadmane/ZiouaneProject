@@ -1,9 +1,9 @@
 <?php
 
-use App\Colis_externe;
+use App\Client;
 use Illuminate\Database\Seeder;
 
-class Colis_externeTableSeeder extends Seeder
+class ClientTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class Colis_externeTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Colis_externe::class, 30)->create();
+        factory(Client::class, 30)->create();
     }
 }

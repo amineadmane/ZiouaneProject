@@ -76,7 +76,9 @@ class Livraison_externeController extends Controller
     {
         return Livraison_externe::where('id_livreur', '=', $livreur)
             ->join('clients', 'livraison_externes.id_client', '=', 'clients.id_client')
-            ->select(DB::raw('livraison_externes.note as note ,livraison_externes.commentaire as commentaire,livraison_externes.created_at , clients.nom , clients.prenom'))->get();
+            ->select(DB::raw('livraison_externes.note as note ,
+            livraison_externes.commentaire as commentaire,livraison_externes.created_at ,
+            clients.nom , clients.prenom'))->get();
     }
 
     public function histolivraisonmensuelle($livreur, $mois, $year)
@@ -131,5 +133,41 @@ class Livraison_externeController extends Controller
      */
     public function destroy(Livraison_externe $livraison_externe)
     {
+    }
+
+    /**************************CLIENT***************************************/
+    public function showHistorique($id)
+    {
+        return Livraison_externe::where('id_client', '=', $id)
+            ->join('livreur_exts', 'livreur_exts.id_liv_ext', '=', 'livraison_externes.id_livreur')
+            ->select(
+                'livreur_exts.nom',
+                'livreur_exts.prenom',
+                'livraison_externes.id_livraison_externe',
+                'livraison_externes.prix',
+                'livraison_externes.created_at'
+            )
+            ->orderBy('livraison_externes.created_at', 'DESC')->get();
+    }
+
+    public function showHistoriqueDetail($id)
+    {
+
+        return Livraison_externe::where(
+            "id_livraison_externe",
+            "=",
+            $id
+        )
+            ->join('livreur_exts', 'livreur_exts.id_liv_ext', '=', 'livraison_externes.id_livreur')
+            ->select(
+                'livreur_exts.nom',
+                'livreur_exts.prenom',
+                'livraison_externes.note',
+                'livraison_externes.adresse',
+                'livraison_externes.adresse_drop_off',
+                'livraison_externes.prix',
+                'livraison_externes.created_at'
+            )
+            ->first();
     }
 }

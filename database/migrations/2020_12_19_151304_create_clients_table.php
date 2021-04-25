@@ -24,6 +24,8 @@ class CreateClientsTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string("code");
+            $table->integer("nb_points", false, true);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -12,6 +12,6 @@ class MetricTableSeedered extends Seeder
      */
     public function run()
     {
-        Metric::factory()->count(30)->create();
+        factory(Metric::class, 30)->create();
     }
 }

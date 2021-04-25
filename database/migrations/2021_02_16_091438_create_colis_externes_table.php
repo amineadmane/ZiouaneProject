@@ -19,6 +19,9 @@ class CreateColisExternesTable extends Migration
             $table->float('valeur')->nullable();
             $table->float('poids')->nullable();
             $table->string('etat')->nullable();
+            $table->integer("hauteur", false, true);
+            $table->integer("largeur", false, true);
+            $table->integer("profondeur", false, true);
             $table->timestamps();
         });
     }

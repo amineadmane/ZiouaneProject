@@ -1,20 +1,14 @@
 <?php
 
+use App\Client;
+use App\Client_Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Colis;
-use App\Evaluation;
-use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\LivreurExtController;
-use App\Livraison_externe;
-use App\Livreur;
 use App\LivreurExt;
-
-
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Monolog\Handler\RotatingFileHandler;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +21,47 @@ use Monolog\Handler\RotatingFileHandler;
 |
 */
 
-
+Route::post('/ResetPassword', 'MailController@ResetPassword');
+Route::post('/SendMail', "MailController@SendMail");
 Route::get('colis', function () {
     return Colis::all();
 });
 
+Route::post('/Livreur', "LivreurExtController@store");
+Route::apiResource('Promotion', "PromotionController");
 
+Route::post('/ClientAuth', function (Request $request) {
+    $request->validate([
+        'telephone' => 'required',
+        'password' => 'required',
+        'device_name' => 'required',
+    ]);
+
+    $user = Client::where('telephone', $request->telephone)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'telephone' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+    return $user->createToken($request->device_name)->plainTextToken;
+});
+
+Route::middleware('auth:sanctum')->get('/ClientAuth', function (Request $request) {
+    return $request->user();
+});
+
+Route::middleware('auth:sanctum')->get('/ClientAuth/revoke', function (Request $request) {
+    $user = $request->user();
+    $user->tokens()->delete();
+    return "token deleted";
+});
+Route::apiResource('ClientPromo', 'ClientPromoController');
+Route::apiResource('Client', 'ClientController');
+Route::post('Client/ChangePassword/{id}', "ClientController@changePassword");
+Route::get('Client/ShowCodenPoints/{id}',  "ClientController@showcodenpoints");
+Route::get('Client/ShowHistorique/{id}',  'Livraison_externeController@showHistorique');
+Route::get('Client/ShowHistoriqueDetail/{id}', 'Livraison_externeController@showHistoriqueDetail');
 
 Route::post('/LivreurExt', function (Request $request) {
     $request->validate([

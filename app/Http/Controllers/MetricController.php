@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Metric;
 use Illuminate\Http\Request;
-Use \Carbon\Carbon;
+use \Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MetricController extends Controller
@@ -62,7 +62,7 @@ class MetricController extends Controller
      * @param  \App\Metric  $metric
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,int $id_liv_ext)
+    public function update(Request $request, int $id_liv_ext)
     {
         $metric = Metric::where('id_liv_ext', '=', $id_liv_ext)->first();
         $metric->update([
