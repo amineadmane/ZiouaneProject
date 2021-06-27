@@ -10,6 +10,8 @@ use App\LivreurExt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
+use function GuzzleHttp\json_decode;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -62,7 +64,7 @@ Route::post('Client/ChangePassword/{id}', "ClientController@changePassword");
 Route::get('Client/ShowCodenPoints/{id}',  "ClientController@showcodenpoints");
 Route::get('Client/ShowHistorique/{id}',  'Livraison_externeController@showHistorique');
 Route::get('Client/ShowHistoriqueDetail/{id}', 'Livraison_externeController@showHistoriqueDetail');
-
+Route::get('ColisExt/{id}', 'Colis_externeController@show');
 Route::post('/LivreurExt', function (Request $request) {
     $request->validate([
         'e_mail' => 'required|e_mail',
@@ -83,6 +85,7 @@ Route::post('/LivreurExt', function (Request $request) {
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::middleware('auth:sanctum')->get('/LivreurExt', function (Request $request) {
+
         return $request->user();
     });
 
@@ -103,6 +106,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('Evaluation', 'EvaluationController');
 
     Route::apiResource('livreur', 'LivreurExtController');
+
+    Route::post('upload/{id}', "LivreurExtController@changePhoto");
 
     Route::get('livraison/{livreur}/{client}/{colis}', [
         'uses' => 'Livraison_externeController@showlivraison'
@@ -174,9 +179,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         'uses' => 'LivreurExtController@switchstatus'
     ]);
 
-    Route::post('send', [
-        'uses' => 'PushNotificationController@bulksend'
-    ]);
     Route::get('Annulerlivraison/{livreur}', [
         'uses' => 'Livraison_externeController@Annuler'
     ]);

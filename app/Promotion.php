@@ -9,7 +9,7 @@ class Promotion extends Model
     protected $guard = 'promotion';
     protected $table_name = 'promotions';
     public $timestamps = true;
-    protected $primaryKey = ['promotion_id'];
+    protected $primaryKey = 'promotion_id';
     protected $fillable = [
         'code',
         'debut_validite',

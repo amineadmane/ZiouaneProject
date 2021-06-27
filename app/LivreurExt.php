@@ -15,7 +15,7 @@ class LivreurExt extends Authenticatable
     protected $primaryKey = 'id_liv_ext';
     protected $fillable = [
         'id_liv_ext', 'nom', 'e_mail', 'prenom', 'phone_number', 'id_permis', 'expire_date', 'etat', 'matricule_vehicule',
-        'modele_vehicule', 'couleur_vehicule', 'note', 'points', 'code_parrainage', 'password'
+        'modele_vehicule', 'couleur_vehicule', 'note', 'points', 'code_parrainage', 'password', 'photo', 'type_vehicule'
     ];
     protected $hidden = [
         'password', 'remember_token',

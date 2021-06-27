@@ -21,6 +21,7 @@ $factory->define(LivreurExt::class, function (Faker $faker) {
         'note' => 2.6,
         'points' => 105,
         'code_parrainage' => $this->faker->ean8(),
-        'password' => $this->faker->md5
+        'password' => bcrypt("password"),
+        'type_vehicule' => "small",
     ];
 });

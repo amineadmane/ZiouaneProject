@@ -20,6 +20,7 @@ use App\FraisLivraison;
 use App\Livraison_externe;
 use Inertia\Inertia;
 use App\Mail\InformationUpdatedMail;
+use DateTime;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ClientController extends Controller
@@ -143,7 +144,6 @@ class ClientController extends Controller
             'prenom' => ['required', 'string', 'max:25'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:clients'],
             'password' => ['required', 'string'],
-
         ]);
 
         if ($validator->fails()) {
@@ -317,6 +317,7 @@ class ClientController extends Controller
      */
     public function store(Request $request, Faker $faker)
     {
+
         $validator = Validator::make($request->all(), [
             'email' => 'unique:clients',
             'telephone' => 'unique:clients'
@@ -324,19 +325,33 @@ class ClientController extends Controller
         if ($validator->fails()) {
             return $validator->errors();
         }
-
-        FacadesDB::insert('INSERT into clients (nom, prenom,telephone,wilaya,commune,email,password,code,nb_points)
-        values (?, ?,?,?,?,?,?,?,?)', [
+        $code = strtoupper($request["prenom"] . $faker->unique()->numberBetween(10000, 99999));
+        FacadesDB::insert('INSERT into clients (nom, prenom,telephone,wilaya,commune,adresse,email,password,code,nb_points)
+        values (?, ?,?,?,?,?,?,?,?,?)', [
             $request["nom"],
             $request["prenom"],
             $request["telephone"],
             $request["wilaya"],
             $request["commune"],
+            $request["adresse"],
             $request["email"],
             Hash::make($request["password"]),
-            strtoupper($request["prenom"] . $faker->unique()->numberBetween(10000, 99999)),
+            $code,
             0
         ]);
+        FacadesDB::insert(
+            'INSERT into promotions (code, debut_validite,fin_validite,valeur,created_at,updated_at)
+            values (?, ?, ? , ? , ? , ?)',
+            [
+                $code,
+                Carbon::now(),
+                Carbon::now()->add("P10Y"),
+                250,
+                Carbon::now(),
+                Carbon::now()
+            ]
+        );
+
         return "operation reussite";
     }
 
@@ -373,7 +388,7 @@ class ClientController extends Controller
     {
         $client = Client::where('id_client', '=', $id)->first();
         if ($client->email == $request['email']  && $client->telephone == $request['telephone']) {
-        } else if ($client->e_mail == $request['email']) {
+        } else if ($client->email == $request['email']) {
             $validator = Validator::make($request->all(), [
                 'telephone' => 'unique:clients'
             ]);
@@ -396,7 +411,6 @@ class ClientController extends Controller
                 return $validator->errors();
             }
         }
-
 
         $client->update([
             'nom' => $request['nom'],

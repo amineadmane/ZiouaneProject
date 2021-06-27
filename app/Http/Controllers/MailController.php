@@ -18,34 +18,34 @@ class MailController extends Controller
     public function SendMail(Request $request, Faker $faker)
 
     {
-        $existe = DB::select(DB::raw('SELECT * from clients where email = ?'), [$request['email']]);
+        $existe = DB::select(DB::raw('SELECT * from clients where telephone = ?'), [$request['telephone']]);
         if ($existe == null) {
             return 'Email incorrect';
         } else {
-            $client =  DB::select(DB::raw('SELECT * from emails where email = ?'), [$request['email']]);
+            $client =  DB::select(DB::raw('SELECT * from emails where email = ?'), [$existe[0]->email]);
             if ($client == null) {
                 $code =  $faker->numberBetween(10000000, 99999999);
                 DB::insert(
                     'INSERT into emails (email, code,created_at,updated_at) values (?, ?, ? , ?)',
-                    [$request['email'], $code, Carbon::now(), Carbon::now()]
+                    [$existe[0]->email, $code, Carbon::now(), Carbon::now()]
                 );
                 $details = [
                     'title' => '[ZIOUANE] Rénitialisation de mot de passe',
                     'body' => strval($code)
                 ];
-                Mail::to($request['email'])->send(new SendPasswordMail($details));
+                Mail::to($existe[0]->email)->send(new SendPasswordMail($details));
                 return "Opetation reussite";
             } else {
                 $code =  $faker->numberBetween(10000000, 99999999);
                 DB::update(
                     'update emails set code = ? , updated_at = ? where email = ? ',
-                    [$code, Carbon::now(), $request['email']]
+                    [$code, Carbon::now(), $existe[0]->email]
                 );
                 $details = [
                     'title' => '[ZIOUANE] Rénitialisation de mot de passe',
                     'body' => strval($code)
                 ];
-                Mail::to($request['email'])->send(new SendPasswordMail($details));
+                Mail::to($existe[0]->email)->send(new SendPasswordMail($details));
                 return "Opetation reussite";
             }
         }
@@ -53,11 +53,14 @@ class MailController extends Controller
 
     public function ResetPassword(Request $request)
     {
-        $email = DB::select(DB::raw('SELECT * from emails where email = ?'), [
-            $request['email']
+        $telephone = DB::select(DB::raw('SELECT * from clients where telephone = ?'), [
+            $request['telephone']
         ]);
-        if ($email[0]->code == $request['code']) {
-            $user = Client::where('email', $request['email'])->first();
+        $email = DB::select(DB::raw('SELECT * from emails where email = ?'), [
+            $telephone[0]->email
+        ]);
+        if (strcmp($email[0]->code,  $request['code']) == 0) {
+            $user = Client::where('telephone', $request['telephone'])->first();
             return $user->createToken($request->device_name)->plainTextToken;
         } else {
             return "code invalide";

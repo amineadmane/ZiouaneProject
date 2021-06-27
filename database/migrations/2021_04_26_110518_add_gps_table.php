@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAdresseToLivraisonExtrenesTable extends Migration
+class AddGpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddAdresseToLivraisonExtrenesTable extends Migration
      */
     public function up()
     {
-        Schema::table('livraison_externes', function (Blueprint $table) {
-            $table->string('adresse_drop_off')->nullable();
+        Schema::table('admins', function (Blueprint $table) {
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
         });
     }
 
@@ -25,8 +26,9 @@ class AddAdresseToLivraisonExtrenesTable extends Migration
      */
     public function down()
     {
-        Schema::table('livraison_externes', function (Blueprint $table) {
-            $table->dropColumn('adresse_drop_off');
+        Schema::table('admins', function (Blueprint $table) {
+            $table->dropColumn('latitude');
+            $table->dropColumn('longitude');
         });
     }
 }

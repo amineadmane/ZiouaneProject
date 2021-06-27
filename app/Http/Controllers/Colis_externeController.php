@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Colis_externe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class Colis_externeController extends Controller
 {
@@ -34,9 +36,15 @@ class Colis_externeController extends Controller
      * @param  \App\Colis_externe  $colis_externe
      * @return \Illuminate\Http\Response
      */
-    public function show(Colis_externe $colis_externe)
+    public function show(int $colis_externe)
     {
-        //
+        return DB::select(
+            DB::raw('SELECT c.dimensions , c.fragilite, c.valeur, c.poids FROM livraison_externes as l JOIN colis_externes as C
+            ON l.id_colis = c.id_colis_externe
+            WHERE  l.id_livraison_externe = :code
+            Limit 1'),
+            array('code' => $colis_externe)
+        );
     }
 
     /**

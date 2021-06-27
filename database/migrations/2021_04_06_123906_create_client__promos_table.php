@@ -14,13 +14,12 @@ class CreateClientPromosTable extends Migration
     public function up()
     {
         Schema::create('client__promos', function (Blueprint $table) {
-
             $table->bigInteger("client_id",);
             $table->bigInteger("promotion_id");
 
             $table->primary(['client_id', "promotion_id"]);
 
-            $table->foreign('client_id')->references('id_client	')
+            $table->foreign('client_id')->references('id_client')
                 ->on('clients')->onDelete('cascade');
 
             $table->foreign('promotion_id')->references('id_promotion')

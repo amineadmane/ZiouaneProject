@@ -158,6 +158,22 @@ class LivreurExtController extends Controller
         return "Operation Reussite";
     }
 
+    public function changePhoto(int $id)
+    {
+        $livreur = LivreurExt::where('id_liv_ext', "=", $id)->first();
+
+        unlink('images/' . $livreur->photo);
+        $image = $_FILES['image']['name'];
+
+        $imagePath = 'images/' . $image;
+        $tmp_name = $_FILES['image']['tmp_name'];
+
+        move_uploaded_file($tmp_name, $imagePath);
+
+        $livreur->update(['photo' => $image]);
+        return "succes";
+    }
+
 
 
 
