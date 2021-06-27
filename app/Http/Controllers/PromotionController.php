@@ -54,7 +54,7 @@ class PromotionController extends Controller
     {
         return DB::select(
             DB::raw(
-                'SELECT p.valeur, p.fin_validite, p.debut_validite, p.code
+                'SELECT p.valeur, p.fin_validite, p.debut_validite, p.code , cp.utilise
         FROM client__promos as cp join promotions as p
         on cp.promotion_id = p.id_promotion
         where cp.client_id = ?

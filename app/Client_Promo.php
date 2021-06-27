@@ -9,6 +9,6 @@ class Client_Promo extends Model
 {
     protected $table_name = "client__promos";
     protected $fillable = [
-        'client_id', 'promotion_id'
+        'client_id', 'promotion_id','utilise'
     ];
 }
