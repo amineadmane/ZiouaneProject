@@ -56,8 +56,8 @@ class ClientPromoController extends Controller
             if ($client_Promo == null) {
                 DB::insert(
                     'insert into client__promos
-                (client_id, promotion_id,created_at,updated_at) values (?, ?, ?, ?)',
-                    [$request["client_id"], $promotions[0]->id_promotion, Carbon::now(), Carbon::now()]
+                (client_id, promotion_id,created_at,updated_at,utilise) values (?, ?, ?, ?,?)',
+                    [$request["client_id"], $promotions[0]->id_promotion, Carbon::now(), Carbon::now(),1]
                 );
                 return "operation reussite";
             } else {
