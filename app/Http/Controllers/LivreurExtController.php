@@ -161,8 +161,9 @@ class LivreurExtController extends Controller
     public function changePhoto(int $id)
     {
         $livreur = LivreurExt::where('id_liv_ext', "=", $id)->first();
-
-        unlink('images/' . $livreur->photo);
+        if ($livreur->photo != null) {
+            unlink('images/' . $livreur->photo);
+        }
         $image = $_FILES['image']['name'];
 
         $imagePath = 'images/' . $image;

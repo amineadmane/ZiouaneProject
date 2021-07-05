@@ -95,7 +95,7 @@ class ClientPromoController extends Controller
                 DB::insert(
                     'insert into client__promos
                 (client_id, promotion_id,created_at,updated_at,utilise) values (?, ?, ?, ?,?)',
-                    [$request["client_id"], $promotions[0]->id_promotion, Carbon::now(), Carbon::now(),1]
+                    [$request["client_id"], $promotions[0]->id_promotion, Carbon::now(), Carbon::now(), 1]
                 );
                 return "operation reussite";
             } else {
@@ -133,9 +133,21 @@ class ClientPromoController extends Controller
      * @param  \App\Client_Promo  $client_Promo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client_Promo $client_Promo)
+    public function setPromo(Request $request, int $idClient)
     {
-        //
+        foreach ($request->all() as $key => $value) {
+
+            $idPromo = Promotion::where('code', '=', $value)->first()->id_promotion;
+
+            $promoClient = Client_Promo::where('client_id', '=', $idClient)
+                ->where('promotion_id', '=', $idPromo)->first();
+
+            DB::update(
+                'UPDATE client__promos SET utilise = 2  WHERE client_id = ? AND promotion_id = ? ',
+                [$idClient, $promoClient->promotion_id,]
+            );
+        }
+        return "operation reussite";
     }
 
     /**

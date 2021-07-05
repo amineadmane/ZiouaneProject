@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Colis_externe;
 use App\Livraison_externe;
 use \Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -27,23 +28,30 @@ class Livraison_externeController extends Controller
      */
     public function store(Request $request)
     {
-        return $livraisonext = Livraison_externe::create(array(
+        $colis = Colis_externe::create(array(
+            "valeur" => $request['valeur'],
+            "poids" => $request['poids'],
+            "etat" => 'en cours',
+            "fragilite" => $request['fragilite'],
+            "dimensions" => $request['dimensions'],
+        ));
+        $livraisonext = Livraison_externe::create(array(
             'id_client' => $request['id_client'],
-            'id_colis' => $request['id_colis'],
+            'id_colis' => $colis->id,
             'id_livreur' => $request['id_livreur'],
             'nomclient' => $request['nomclient'],
             'telephone' => $request['telephone'],
-            'wilaya' => $request['wilaya'],
-            'commune' => $request['commune'],
-            'codePostal' => $request['codePostal'],
             'adresse' => $request['adresse'],
+            'note' => 0,
+            'adresse_drop_off' => $request['adresse_drop_off'],
             'prix' => $request['prix'],
             'ditance_parcourous' => $request['ditance_parcourous'],
-            'note' => $request['note'],
-            'commentaire' => $request['commentaire'],
+            'prix_promo' => $request['prix_promo']
         ));
+        return "Operation reussie";
     }
 
+    //fonction a refaire
     public function Annuler($livreur)
     {
         $livraison = Livraison_externe::where('id_livreur', '=', $livreur)->orderBy('id_livraison_externe', 'DESC')->first();
@@ -86,7 +94,7 @@ class Livraison_externeController extends Controller
         return Livraison_externe::where('id_livreur', '=', $livreur)->where(DB::raw("MONTH(livraison_externes.created_at)"), '=', $mois)->where(DB::raw("YEAR(livraison_externes.created_at)"), '=', $year)
             ->join('clients', 'livraison_externes.id_client', '=', 'clients.id_client')
             ->select(DB::raw('clients.nom as clientname ,clients.prenom as clientprenom ,livraison_externes.created_at as datelivraison,
-        livraison_externes.adresse as dropoff,livraison_externes.prix as prix ,clients.adresse as pickup ,livraison_externes.note as note'))->get();
+        livraison_externes.adresse_drop_off as dropoff,livraison_externes.prix as prix ,livraison_externes.adresse as pickup ,livraison_externes.note as note'))->get();
     }
     public function showderniereliv($livreur)
     {
@@ -111,6 +119,12 @@ class Livraison_externeController extends Controller
     public function showlivraisonsmensuels($livreur, $month)
     {
         return Livraison_externe::where('id_livreur', '=', $livreur)->whereMonth('created_at', '=', $month)->get();
+    }
+
+    public function Livraison(int $idLiv)
+    {
+        $livraison = Livraison_externe::where('id_livraison_externe', '=', $idLiv);
+        $livraison->update([]);
     }
 
     /**

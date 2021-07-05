@@ -83,6 +83,8 @@ Route::post('/LivreurExt', function (Request $request) {
     return $user->createToken($request->device_name)->plainTextToken;
 });
 
+Route::post('SetPromo/{idClient}', 'ClientPromoController@setPromo');
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::middleware('auth:sanctum')->get('/LivreurExt', function (Request $request) {
 
